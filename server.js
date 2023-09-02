@@ -1,17 +1,16 @@
+// https://github.com/HackerNews/API
+// https://firebase.google.com/docs/database
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
-const firebaseConfig = {
-  // ...
-  // The value of `databaseURL` depends on the location of the database
-  databaseURL: "https://DATABASE_NAME.firebaseio.com",
-};
+const databaseURL= "https://hacker-news.firebaseio.com";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({ databaseURL });
+const db = getDatabase(app);
 
-
-// Initialize Realtime Database and get a reference to the service
-const database = getDatabase(app);
+const itemRef = ref(db, '/v0/item/8863');
+onValue(itemRef, (snapshot) => {
+  const data = snapshot.val();
+  console.log("WBA4", data, snapshot)
+  process.exit()
+});
